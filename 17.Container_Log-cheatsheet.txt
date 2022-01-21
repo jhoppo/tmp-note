@@ -1,0 +1,6 @@
+# To show running containers:
+  crictl ps
+# To show information for container
+  crictl inspect {{ containerID }}
+# To show log for container
+  crictl logs {{ containerID }}

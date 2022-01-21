@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    id: very-important
+  name: deploy-important
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      id: very-important
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        id: very-important
+    spec:
+      containers:
+      - image: nginx:1.17.6-alpine
+        name: container1
+        resources: {}
+      - image: kubernetes/pause
+        name: container2
+        resources: {}
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: id
+                operator: In
+                values: 
+                - very-important
+            topologyKey: kubernetes.io/hostname
+status: {}
+# line 27 to 29 will make the pod scheduled on Master Node.

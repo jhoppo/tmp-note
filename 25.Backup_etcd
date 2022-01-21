@@ -1,0 +1,22 @@
+# etcd mounted path: /var/lib/etcd
+
+# backup
+kubectl -n kube-system exec {{ etcd-pod-name }} -- ETCDCTL_API=3 etcdctl --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /var/lib/etcd/{{ backup_name }}
+
+
+# restore ### don't do it in test ###
+kubectl -n kube-system exec {{ etcd-pod-name }} -- ETCDCTL_API=3 etcdctl snapshot restore /var/lib/{{ backup_name }} --data-dir /var/lib/{{ restore_name }} --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key
+
+# modify etcd.yaml
+
+# this is original etcd.yaml
+[ori]
+volumes:
+- hostPath:
+    path: /var/lib/etcd
+
+# after edit
+[new]
+volumes:
+- hostPath:
+    path: /var/lib/{{ restore_name }}

@@ -1,0 +1,7 @@
+# kubectl tools version must as same as master's, if not up/downgrade it
+
+
+## On master node ##
+kubeadm token create --print-join-command   ## Copy the standoutput on screen and paste on worker node to execute
+  # OR #
+kubeadm token create --print-join-command | ssh {{ workerNode }}

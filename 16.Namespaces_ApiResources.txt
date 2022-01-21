@@ -1,0 +1,23 @@
+# Write the names of all "namespaced" Kubernetes resources
+  kubectl api-resources --namespaced -o name
+# Find the specified Namespace with the highest number of Roles
+  example:
+        ➜ k -n project-c13 get role --no-headers | wc -l
+        No resources found in project-c13 namespace.
+        0
+        
+        ➜ k -n project-c14 get role --no-headers | wc -l
+        300  #  <-- This is the highest number
+        
+        ➜ k -n project-hamster get role --no-headers | wc -l
+        No resources found in project-hamster namespace.
+        0
+        
+        ➜ k -n project-snake get role --no-headers | wc -l
+        No resources found in project-snake namespace.
+        0
+        
+        ➜ k -n project-tiger get role --no-headers | wc -l
+        No resources found in project-tiger namespace.
+        0
+  ref answer: project-c14 with 300 resources

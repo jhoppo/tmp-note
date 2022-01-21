@@ -1,0 +1,10 @@
+# Check how long Certs are valid #
+# method 1:
+find /etc/kubernetes/pki | grep apiserver
+openssl x509  -noout -text -in /etc/kubernetes/pki/apiserver.crt | grep Validity -A2
+# method 2:
+kubeadm certs check-expiration | grep apiserver
+
+
+# Refresh apiServer Certs
+kubeadm certs renew apiserver
