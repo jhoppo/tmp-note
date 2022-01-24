@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: statefulset1
+  name: statefulset1
+spec:
+  replicas: 4
+  serviceName: statefulset1
+  selector:
+    matchLabels:
+      app: statefulset1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: statefulset1
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+#status:
+#  replicas: 3
+#  availableReplicas: 3
